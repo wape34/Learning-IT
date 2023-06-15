@@ -1,0 +1,147 @@
+"""
+Все команды для наполнения и взаимодействия с БД.
+Внимание! Счет пользователей идет с id=2, так как первый был удален ради проверки команды удаления :)
+"""
+
+
+from news.models import *
+
+1 ---Создать двух пользователей (с помощью метода User.objects.create_user('username')).---
+user1 = User.objects.create_user('Vlad')
+user2 = User.objects.create_user('Petr')
+
+
+2 ---Создать два объекта модели Author, связанные с пользователями.---
+Author.objects.create(user=user1)
+Author.objects.create(user=user2)
+
+
+3 ---Добавить 4 категории в модель Category.---
+Category.objects.create(category_name='Sport') 
+Category.objects.create(category_name='Politics') 
+Category.objects.create(category_name='Education') 
+Category.objects.create(category_name='Movie') 
+
+
+4 ---Добавить 2 статьи и 1 новость.---
+author1 = Author.objects.get(pk=2)
+author2 = Author.objects.get(pk=1)
+name1 = 'Возвращение брата Хабиба'
+content1 = 'В ночь с 3 на 4 июня на арене «UFC Apex» в Лас-Вегасе (США) состоится очередной турнир UFC Fight Nights. Он привлекает особое внимание российских поклонников смешанных единоборств, поскольку включает сразу несколько боёв наших парней. Сначала Максим Гришин пройдёт проверку на прочность Филипе Линсом. Затем беларус Андрей Орловский будет биться с Донтейлом Майесом. А ещё в карде поединок брата Хабиба – Абубакара Нурмагомедова. Ему будет противостоять Элизеу Залески дос Сантос. В главном бою вечера сойдутся Кай Кара-Франс и Амир Альбази.'
+Post.objects.create(name=name1, type='AR', content=content1, author=author1)
+name2 = 'На волосок от жизни: история «Бойцовского клуба»'
+content2 = 'Дэвид Финчер — один из самых известных режиссёров Голливуда и мастер триллеров. В его фильмографии есть как спорные работы, так и признанные шедевры. Поначалу «Бойцовский клуб» сложно было однозначно отнести к первой или второй категории, в отличие от «Зодиака» или «Семь». «Зодиак» часто называют одним из слабых фильмов Финчера, а «Семь» — чуть ли не лучшим. Определить же положение «Клуба» на момент выхода было сложнее.'
+Post.objects.create(name=name2, type='AR', content=content2, author=author1)
+
+name3 = 'Малыш и гаджет: как помочь ребенку стать айтишником'
+content3 = 'Дети могут изучать программирование примерно с шести лет. Но надо понимать, что это не написание кода, а создание алгоритмов, то есть инструкций для решения конкретных задач, - говорит партнер Лиги Цифровой Экономики Александр Сычев. - Существуют специальные онлайн-инструменты, которые позволяют придумывать алгоритмы в игровой форме. Они работают так: ребенок составляет разнообразные инструкции, например, как сказочному персонажу пройти вправо или влево. Постепенно игра усложняется: персонажу нужно не просто двигаться, а обойти препятствие. В результате ребенок видит связи между объектами и управляет взаимозависимыми процессами. Когда этот этап пройден, можно переходить к визуальным алгоритмическим языкам, например Scratch и Construct. Они достаточно простые, как правило, именно с них все начинают изучать программирование и ИТ в целом.'
+Post.objects.create(name=name3, type='NE', content=content3, author=author2)
+
+
+5 ---Присвоить им категории (как минимум в одной статье/новости должно быть не меньше 2 категорий).---
+post1 = Post.objects.all()[0]
+category1 = Category.objects.get(pk=1)
+post1.category.add(category1)
+
+post2 = Post.objects.all()[1]
+category2 = Category.objects.get(pk=4)
+post2.category.add(category1)
+post2.category.add(category2)
+
+post3 = Post.objects.all()[2]
+category3 = Category.objects.get(pk=3)
+post3.category.add(category3)
+
+
+6 ---Создать как минимум 4 комментария к разным объектам модели Post (в каждом объекте должен быть как минимум один комментарий).---
+post1 = Post.objects.all()[0] 
+post2 = Post.objects.all()[1] 
+post3 = Post.objects.all()[2]
+
+user1 = User.objects.all()[0] 
+user2 = User.objects.all()[1]
+
+comment1 = 'Нужно делать ставки'
+comment2 = 'Классный фильм'
+comment3 = 'Очень познавательно'
+comment4 = 'Отличная новость'
+
+Comment.objects.create(post=post1, user=user1, comment_text=comment1)
+Comment.objects.create(post=post2, user=user1, comment_text=comment2)
+Comment.objects.create(post=post3, user=user1, comment_text=comment3)
+Comment.objects.create(post=post3, user=user2, comment_text=comment4)
+
+
+7 ---Применяя функции like() и dislike() к статьям/новостям и комментариям, скорректировать рейтинги этих объектов.---
+com1 = Comment.objects.all()[0] 
+com2 = Comment.objects.all()[1] 
+com3 = Comment.objects.all()[2] 
+com4 = Comment.objects.all()[3]
+
+post1 = Post.objects.all()[0]
+post2 = Post.objects.all()[1]
+post3 = Post.objects.all()[2]
+
+com1.dislike()
+com1.dislike()
+com1.dislike()
+com1.dislike()
+com1.dislike()
+com1.dislike()
+com2.like()
+com2.like()
+com3.like()
+com3.like()
+com4.like()                     
+com4.like()
+com4.like()
+com4.like()
+
+post1.like()
+post1.like()
+post2.like() 
+post2.like()
+post2.like()
+post3.like() 
+post3.like()
+post3.like()
+post3.like()
+
+
+8 ---Обновить рейтинги пользователей.---
+user1 = Author.objects.all()[0]
+user2 = Author.objects.all()[1]
+user1.update_rating()
+user2.update_rating()
+
+
+9 ---Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта).---
+User.objects.get(id=Author.objects.all().order_by('-user_rating').values('user', 'user_rating')[0]['user']).username, Author.objects.all().order_by('-user_rating').values('user', 'user_rating')[0]['user_rating']
+
+
+10 ---Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.---
+best_post = Post.objects.all().order_by('-rating').values('datetime_in', 'author', 'rating', 'name', 'id')[0]
+f"Дата: {best_post['datetime_in']}", f"Автор: {Author.objects.get(id=best_post['author']).user}", f"Рейтинг: {best_post['rating']}", f"Заголовок: {best_post['name']}", f"Превью: {Post.objects.get(id=best_post['id']).preview()}"
+
+
+11 ---Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье.---
+best_post = Post.objects.all().order_by('-rating')[0]
+best_post_comments = Comment.objects.filter(post=best_post).values('datetime_in', 'user', 'rating', 'comment_text')
+[(f"Дата: {i['datetime_in']}", f"Пользователь: {User.objects.get(id=i['user'])}", f"Рейтинг: {i['rating']}", f"Комментарий: {i['comment_text']}") for i in best_post_comments] 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+{% extends 'flatpages/default.html' %}
+
+{% load static %}
+
+{% block title %}
+    Home page
+{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" type='text/css' href="{% static 'css/home-styles.css' %}">
+<h1>Добро пожаловать на новостной портал!</h1>
+<hr>
+<p class="pages">На данный момент доступны две страницы:</p>
+<ol>
+    <li>News - все новости</li>
+    <li>Random new - случайная новость</li>
+</ol>
+
+{% endblock content %}

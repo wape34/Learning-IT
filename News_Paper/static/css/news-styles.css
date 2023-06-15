@@ -1,0 +1,28 @@
+h1 {
+    font-style: italic;
+    font-family: fantasy;
+    font-size: 3em;
+}
+
+h3 {
+    font-family: fantasy;
+}
+
+td {
+    border: 1px solid;
+    padding: 10px;
+}
+
+table {
+	width: 100%;
+	font-family: serif;
+}
+
+.table-head {
+    background-color: lightgray;
+    height: 50px;
+}
+
+.date-time-collumn {
+	width: 15%;
+}

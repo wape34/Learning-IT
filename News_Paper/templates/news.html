@@ -1,0 +1,33 @@
+{% extends 'flatpages/default.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" type='text/css' href="{% static 'css/news-styles.css' %}">
+
+<h1>Все доступные новости</h1>
+<hr>
+<h3>Сейчас на портале {{ news|length }} новости</h3>
+{% if news %}
+	<table>
+		<tr class="table-head">
+			<td>Заголовок</td>
+			<td class="date-time-collumn">Дата публикации</td>
+			<td>Содержание</td>
+		</tr>
+		{% for i in news %}
+		<tr>
+			<td>{{ i.name|censor }}</td>
+			<td>{{ i.datetime_in|date:'d.m.Y' }}</td>
+			<td>{{ i.content|truncatechars:20 }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% else %}
+	<h2>Новостной портал пуст!</h2>
+{% endif %}
+{% endblock content %}

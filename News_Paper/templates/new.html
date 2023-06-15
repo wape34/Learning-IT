@@ -1,0 +1,27 @@
+{% extends 'flatpages/default.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+Fresh new
+{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" type='text/css' href="{% static 'css/news-styles.css' %}">
+
+
+<h1>Одна из новостей</h1>
+<hr>
+<table>
+		<tr class="table-head">
+			<td>Заголовок</td>
+			<td class="date-time-collumn">Дата публикации</td>
+			<td>Содержание</td>
+		</tr>
+		<tr>
+			<td>{{ new.name|censor }}</td>
+			<td>{{ new.datetime_in|date:'d.m.Y' }}</td>
+			<td>{{ new.content|censor }}</td>
+		</tr>
+</table>
+{% endblock content %}

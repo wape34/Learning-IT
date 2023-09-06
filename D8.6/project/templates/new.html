@@ -1,0 +1,11 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% block title %}
+New
+{% endblock title %}
+
+{% block content %}
+    <h1>Новость</h1>
+    <h3>{{ time_now|date:'M d Y' }}</h3>
+    <h3>{{ new.description|truncatewords:200|censor }}</h3>
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Replies
+{% endblock title %}
+
+{% block content %}
+<h1>Все отклики</h1>
+<hr>
+{% if replies %}
+       <table class="table table-bordered">
+           <tr>
+               <td>Объявление</td>
+               <td>Текст</td>
+               <td>Дата создания</td>
+               <td>Автор</td>
+           </tr>
+           {% for r in replies %}
+           <tr>
+               <td>{{ r.post }}</td>
+               <td><a href="{% url 'reply_detail' r.id %}">{{ r.reply_text|truncatechars:20 }}</a></td>
+               <td>{{ r.time_create|date:'H:m d M Y' }}</td>
+               <td>{{ r.user }}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>Откликов нет!</h2>
+   {% endif %}
+{% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+<p>&nbsp;</p>
+<a href="{% url 'post_list' %}">Назад к объявлениям</a>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Post
+{% endblock title %}
+
+
+
+{% block content %}
+    <h1>{{ post }}</h1>
+    <h3>{{ post.post_text|truncatewords:200 }}</h3>
+<p><span style="color: #ff0000;"><a style="color: #ff0000;" href="{% url 'reply_create' post.id %}">Оставить отклик</a> <a style="color: #ff0000;" href="{% url 'reply_detail' post.id %}">Посмотреть отклики на это объявление</a></span></p>
+<p><a href="{% url 'post_list' %}">Назад к объявлениям</a>&nbsp;</p>
+{% endblock content %}

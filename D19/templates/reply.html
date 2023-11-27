@@ -1,0 +1,15 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Post
+{% endblock title %}
+
+
+
+{% block content %}
+    <h1>{{ reply }}</h1>
+    <h3>{{ reply_text|truncatewords:200 }}</h3>
+<p>&nbsp;</p>
+<a href="{% url 'reply_list' %}">Назад к откликам</a>
+
+{% endblock content %}
